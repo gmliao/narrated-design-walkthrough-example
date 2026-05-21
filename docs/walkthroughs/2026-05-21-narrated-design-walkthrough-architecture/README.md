@@ -1,42 +1,64 @@
-# 設計文件太多看不完？用 AI 生成 8 分鐘可收聽 Walkthrough
+# Narrated Design Walkthrough Architecture
 
 - `status`: generated-derivative
-- `sourceDesign`: docs/design/2026-05-21-narrated-design-walkthrough-architecture.md
-- `sourcePlan`: N/A
+- `sourceDesign`: [`docs/design/2026-05-21-narrated-design-walkthrough-architecture.md`](../../design/2026-05-21-narrated-design-walkthrough-architecture.md)
+- `sourcePlan`: (none)
 - `lastRegenerated`: 2026-05-21
 
-這份 walkthrough 是 canonical design / plan 的消費端 derivative, 用於 async review, onboarding, 或 stakeholder explanation。請不要把它當成規格真相來源。
+這份 walkthrough 是 canonical design doc 的 generated derivative，用於 async review、onboarding 與架構 briefing。正式決策記錄仍以 source design doc 為準。
+
+## 內容邊界
+
+本目錄只應包含：
+
+- `slides.md`：Slidev content、每張 slide 的 `<NarrationCue :text>`、speaker notes、`data-walkthrough-anchor` wiring。
+- `README.md`：provenance、preview commands、validation commands、edit boundary。
+
+Shared runtime 放在 [`docs/walkthroughs/_addon/`](../_addon/)。不要把 `NarrationCue`、`GlobalCaptions`、`TTSNavButtons`、composables 或 spotlight CSS 複製進本 walkthrough 目錄。
 
 ## Preview
 
-播放引擎與控件不放在本目錄, 共用自 [`docs/walkthroughs/_addon/`](../_addon/)（NarrationCue / GlobalCaptions / TTSNavButtons / spotlight engine 等）。本目錄只保留 `slides.md` 跟 `README.md`。
-
-由 `docs/walkthroughs/` 統一管 Slidev 依賴 + generic dev/build script（吃 slug 參數）：
+所有 walkthrough 共用 root [`docs/walkthroughs/package.json`](../package.json) 與 root `node_modules`。
 
 ```bash
 cd docs/walkthroughs
-npm install                       # 一次性，全部 walkthrough 共用 node_modules
-npm run dev 2026-05-21-narrated-design-walkthrough-architecture              # 啟動本 walkthrough preview
-npm run build 2026-05-21-narrated-design-walkthrough-architecture            # 產出 static SPA 到本目錄的 dist/
-npm run list                      # 列出所有可用 slug
+npm run list
+npm run validate 2026-05-21-narrated-design-walkthrough-architecture
+npm run dev 2026-05-21-narrated-design-walkthrough-architecture
 ```
 
-預設 port `3030`，網址 `http://127.0.0.1:3030`。
+預設 preview URL：
 
-## Recording / Autoplay
+```text
+http://127.0.0.1:3030
+```
 
-要錄成 MP4 demo：
+如果 3030 port 已被占用：
 
-1. `http://localhost:3030/1?play=1` 開頁面，點一次 **Listen**（瀏覽器 autoplay 規則要 user gesture）。
-2. narration 念完 → Slidev 自動切下一張 → 新 slide narration 接著播 → 一路到最後。
-3. 最後一張結束時畫面會跑「End of walkthrough」banner，這時可以停止錄影。
-4. 中途要取消：點 nav bar 上的 **AUTO** 按鈕取消 autoplay，或關掉分頁。
+```bash
+npm run dev 2026-05-21-narrated-design-walkthrough-architecture -- --port 4000
+```
 
-Mac 錄影流程（BlackHole + QuickTime / OBS）詳見 skill 文件的 Recording Mode 章節。
+## Validation Checklist
 
-## Edit
+請先跑 `validate` 再開 dev server。它會檢查：
 
-- 改設計內容時, 優先更新 source design / plan, 再重產本 walkthrough。
-- 只修消費體驗時, 可以直接改 `slides.md` 與 speaker notes。
-- 每張 slide 的 `<NarrationCue :text>` 內容應與 speaker notes 保持一致。
-- 播放控件、字幕、spotlight 引擎共用自 `../_addon/`；要改播放邏輯改那邊（全部 walkthrough 自動套用），不要在這裡複製一份。
+- `F0-F2`：缺少 `addons: [./_addon]`，或誤寫成 `../_addon`。
+- `M1`：Mermaid labels 有未 escape 的 brackets。
+- `N1`：殘留舊版 per-slide `<TTSPlayer>` / `<GlobalTTSPlayer>`。
+
+Live preview 至少確認：
+
+- title / source boundary slide。
+- 至少一張 Mermaid slide。
+- 至少一張 phase / decision slide。
+- Slidev bottom-left nav 裡有 TTS controls。
+- 按下 Listen 後 captions 與 spotlight 行為正常。
+
+## Edit Boundary
+
+- 設計內容變更時，先更新 canonical source design。
+- Source design 有實質變更後，再從 source 重新生成本 walkthrough。
+- `<NarrationCue :text>` 和 speaker notes 必須保持同步。
+- 每個 spoken stage direction 都必須同時有 `[h:anchor]...[/h]` markup 與 matching `data-walkthrough-anchor`。
+- Shared playback behavior 屬於 `_addon`，不要放進這個 generated directory。

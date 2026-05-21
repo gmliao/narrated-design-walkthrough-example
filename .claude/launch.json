@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "walkthrough-dev",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev", "--prefix", "docs/walkthroughs", "--", "2026-05-21-narrated-design-walkthrough-architecture"],
+      "port": 3030
+    }
+  ]
+}
