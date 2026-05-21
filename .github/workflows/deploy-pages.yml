@@ -1,0 +1,61 @@
+name: Deploy walkthroughs to Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Slidev dependencies
+        working-directory: docs/walkthroughs
+        run: npm install --no-audit --no-fund
+
+      - name: Validate all walkthroughs
+        working-directory: docs/walkthroughs
+        run: npm run validate
+
+      - name: Build each walkthrough with base path
+        working-directory: docs/walkthroughs
+        env:
+          REPO_BASE: /narrated-design-walkthrough-example
+        run: |
+          mkdir -p ../../site
+          cp index.html ../../site/
+          for slug in $(npm run --silent list | tail -n +2 | sed 's/^[[:space:]]*//'); do
+            echo "→ building $slug with base $REPO_BASE/$slug/"
+            npm run build "$slug" -- --base "$REPO_BASE/$slug/"
+            mkdir -p "../../site/$slug"
+            cp -r "$slug/dist/." "../../site/$slug/"
+          done
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
