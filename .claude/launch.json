@@ -6,6 +6,12 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev", "--prefix", "docs/walkthroughs", "--", "2026-05-21-narrated-design-walkthrough-architecture"],
       "port": 3030
+    },
+    {
+      "name": "walkthrough-dev-claude-code",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev", "--prefix", "docs/walkthroughs", "--", "2026-05-24-claude-code-large-codebases", "--", "--port", "3031"],
+      "port": 3031
     }
   ]
 }
