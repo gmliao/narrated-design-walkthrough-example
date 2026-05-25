@@ -20,7 +20,7 @@
 
     main {
       width: 100%;
-      max-width: 680px;
+      max-width: 720px;
       padding: 4rem 1.5rem 2rem;
       flex: 1;
     }
@@ -58,7 +58,7 @@
     .lang-toggle button:hover { background: #1a1a1a; color: #e5e5e5; }
     .lang-toggle button.active { background: #1a1a1a; color: #ffffff; }
 
-    .hero { margin-bottom: 3rem; }
+    .hero { margin-bottom: 2rem; }
 
     h1 {
       font-size: clamp(1.75rem, 5vw, 2.75rem);
@@ -79,40 +79,92 @@
       border: 1px solid #2a2a2a;
       border-radius: 8px;
       padding: 1.25rem 1.5rem;
-      margin-bottom: 2.5rem;
+      margin-bottom: 1.25rem;
       font-size: 0.9375rem;
       color: #c4c4c4;
     }
 
     .about p + p { margin-top: 0.6rem; }
 
-    .cta-btn {
-      display: inline-block;
-      background: #3b82f6;
-      color: #ffffff;
-      text-decoration: none;
-      font-size: 1rem;
-      font-weight: 600;
-      padding: 0.85rem 2rem;
-      border-radius: 8px;
-      transition: background 0.15s ease;
-      margin-bottom: 2.5rem;
-    }
-
-    .cta-btn:hover { background: #2563eb; }
-
     .browser-note {
       font-size: 0.8125rem;
       color: #737373;
-      margin-top: -1.75rem;
-      margin-bottom: 2.5rem;
+      margin-bottom: 2.25rem;
     }
 
     h2 {
       font-size: 1.125rem;
       font-weight: 600;
       color: #ffffff;
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .walkthrough-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      margin-bottom: 2.75rem;
+    }
+
+    .wt-card {
+      display: block;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease;
+    }
+
+    .wt-card:hover {
+      border-color: #3b82f6;
+      background: #1f1f1f;
+      transform: translateY(-1px);
+    }
+
+    .wt-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.18rem 0.55rem;
+      border-radius: 4px;
+      margin-bottom: 0.65rem;
+    }
+
+    .wt-tag-internal {
+      background: rgba(125, 211, 252, 0.12);
+      color: #7dd3fc;
+      border: 1px solid rgba(125, 211, 252, 0.25);
+    }
+
+    .wt-tag-external {
+      background: rgba(252, 211, 77, 0.12);
+      color: #fcd34d;
+      border: 1px solid rgba(252, 211, 77, 0.25);
+    }
+
+    .wt-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 0.45rem;
+      letter-spacing: -0.01em;
+    }
+
+    .wt-desc {
+      font-size: 0.9rem;
+      color: #a3a3a3;
+      margin-bottom: 0.7rem;
+      line-height: 1.55;
+    }
+
+    .wt-cta {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #3b82f6;
     }
 
     .install-block {
@@ -149,7 +201,7 @@
 
     footer {
       width: 100%;
-      max-width: 680px;
+      max-width: 720px;
       padding: 1.5rem;
       border-top: 1px solid #1f1f1f;
       display: flex;
@@ -184,28 +236,48 @@
 
     <div class="hero">
       <h1>Narrated Design Walkthroughs</h1>
-      <p class="tagline" data-lang="en">Turn engineering design docs into 8-minute audio-first walkthroughs you can listen to on a walk.</p>
-      <p class="tagline" data-lang="zh">把工程設計文件轉成 8 分鐘的音訊優先 walkthrough，戴耳機走路也能聽完。</p>
+      <p class="tagline" data-lang="en">Turn engineering design docs &mdash; or any technical writing &mdash; into 8-minute audio-first walkthroughs you can listen to on a walk.</p>
+      <p class="tagline" data-lang="zh">把工程設計文件 &mdash; 或任何技術內容 &mdash; 轉成 8 分鐘的音訊優先 walkthrough，戴耳機走路也能聽完。</p>
     </div>
 
     <div class="about">
       <div data-lang="en">
-        <p>This demo uses Mandarin Chinese narration generated via the Web Speech API, so you can hear the architecture explained naturally as you follow along.</p>
-        <p>Subtitles are written as English-readable stage directions, making each slide self-explanatory even with the sound off.</p>
+        <p>Mandarin narration via the Web Speech API, English-readable subtitles written as engineer-to-engineer stage directions. Each slide is self-explanatory even with the sound off.</p>
+        <p>Two persona variants ship today: <strong>internal design</strong> (engineer briefing the architect on a team decision) and <strong>external source</strong> (engineer presenting an outside resource with own filter and judgment).</p>
       </div>
       <div data-lang="zh">
-        <p>本示範使用 Web Speech API 即時產生普通話旁白，邊看 slides 邊聽架構說明。</p>
-        <p>字幕以工程師 brief 的語氣撰寫，即使不開聲音，每張 slide 也能獨立閱讀。</p>
+        <p>使用 Web Speech API 即時產生普通話旁白，字幕以工程師對話的舞台指示語氣撰寫，不開聲音也能獨立閱讀。</p>
+        <p>目前提供兩種 persona 變體：<strong>內部設計</strong>（資深工程師向 architect 簡報團隊決策）與<strong>外部資源</strong>（資深工程師把外部資料挑出對團隊有用的點，附自己的取捨判斷）。</p>
       </div>
     </div>
 
-    <a class="cta-btn" href="./2026-05-21-narrated-design-walkthrough-architecture/">
-      <span data-lang="en">Open walkthrough &rarr;</span>
-      <span data-lang="zh">開啟 Walkthrough &rarr;</span>
-    </a>
-
     <p class="browser-note" data-lang="en">Web Speech API quality varies &mdash; Chrome/Edge recommended for Chinese voice.</p>
     <p class="browser-note" data-lang="zh">不同瀏覽器的 Web Speech API 音質有差異，建議使用 Chrome 或 Edge 以獲得最佳中文語音。</p>
+
+    <h2 data-lang="en">Walkthroughs</h2>
+    <h2 data-lang="zh">已收錄的 Walkthroughs</h2>
+
+    <div class="walkthrough-list">
+      <a class="wt-card" href="./2026-05-21-narrated-design-walkthrough-architecture/">
+        <span class="wt-tag wt-tag-internal" data-lang="en">Internal design &middot; 2026-05-21 &middot; 14 slides</span>
+        <span class="wt-tag wt-tag-internal" data-lang="zh">內部設計 &middot; 2026-05-21 &middot; 14 張 slide</span>
+        <h3 class="wt-title">Narrated Design Walkthrough Architecture</h3>
+        <p class="wt-desc" data-lang="en">The skill explains its own architecture. Engineer briefing the architect on the actual design decisions behind the walkthrough generator &mdash; addon path, NarrationCue, spotlight contract, Teleport vs NavControls.</p>
+        <p class="wt-desc" data-lang="zh">這個 skill 解釋它自己的架構。資深工程師向 architect 簡報 walkthrough 生成器背後的實際設計決策 &mdash; addon 路徑、NarrationCue、spotlight contract、Teleport vs NavControls。</p>
+        <span class="wt-cta" data-lang="en">Open walkthrough &rarr;</span>
+        <span class="wt-cta" data-lang="zh">開啟 walkthrough &rarr;</span>
+      </a>
+
+      <a class="wt-card" href="./2026-05-24-claude-code-large-codebases/">
+        <span class="wt-tag wt-tag-external" data-lang="en">External source &middot; 2026-05-24 &middot; 12 slides</span>
+        <span class="wt-tag wt-tag-external" data-lang="zh">外部資源 &middot; 2026-05-24 &middot; 12 張 slide</span>
+        <h3 class="wt-title">Claude Code in Large Codebases</h3>
+        <p class="wt-desc" data-lang="en">Filtered take on Anthropic's best-practices blog (May 2026). Senior engineer pulls the 4 most useful patterns for the team, names the 2 that should wait, and leaves 3 open questions &mdash; instead of summarizing all 7 extension points.</p>
+        <p class="wt-desc" data-lang="zh">Anthropic 2026 年 5 月最佳實踐部落格的過濾版。資深工程師從 7 個 extension points 中挑出最適用我們團隊的 4 個建議、明確說明 2 個該延後的、留下 3 個未解問題 &mdash; 不做完整翻譯。</p>
+        <span class="wt-cta" data-lang="en">Open walkthrough &rarr;</span>
+        <span class="wt-cta" data-lang="zh">開啟 walkthrough &rarr;</span>
+      </a>
+    </div>
 
     <h2 data-lang="en">How to build your own</h2>
     <h2 data-lang="zh">自己來一份</h2>
@@ -214,8 +286,8 @@
       <pre>claude plugin marketplace add gmliao/narrated-design-walkthrough
 claude plugin install narrated-design-walkthrough</pre>
     </div>
-    <p class="install-note" data-lang="en">Then start a Claude Code session and type <code>/narrated-design-walkthrough</code> to generate a walkthrough from your design docs.</p>
-    <p class="install-note" data-lang="zh">安裝完後，在 Claude Code session 輸入 <code>/narrated-design-walkthrough</code>，指向你的設計文件即可生成。</p>
+    <p class="install-note" data-lang="en">Then start a Claude Code session and run <code>/narrated-design-walkthrough</code> pointing at a design doc (internal) or a URL (external).</p>
+    <p class="install-note" data-lang="zh">安裝完後，在 Claude Code session 執行 <code>/narrated-design-walkthrough</code>，指向設計文件（內部）或一個 URL（外部）即可。</p>
   </main>
 
   <footer>
